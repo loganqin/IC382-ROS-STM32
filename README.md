@@ -1,95 +1,54 @@
-# agv_base_control
-This repository is used to develop a ROS base controller with STM32 for AGV. Noted that this repository is developed and tested by ROS-Noetic and Ubuntu Server 18.04 64 bit in raspberry pi 3B+.
+# STM32F1 ROS Subscriber
 
-## Installation
-Please install the following packages when ROS Noetic is installed properly.
-1. ROS teleop_twist_keyboard
-```
-sudo apt-get install ros-noetic-teleop-twist-keyboard
-```
-```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
+This repository is tested and developed using Nucleo 64 STM32F103RBT6. If you need to use other MCU, you may need to make certain changes.
 
-2. ROS rosserial
-```
-sudo apt install ros-noetic-rosserial
-```
+## A. STM32CUBMX Config
+1) You need to setup DMA for USART2
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/01_dma_rx.PNG)
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/01_dma_tx.PNG)
 
-3. ROS rosserial_stm32
-```
-cd src
-git clone https://github.com/yoneken/rosserial_stm32.git
-cd ..
-catkin_make
-```
+2) You need to enable USART2 Global Interrupt
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/02_uart_it.PNG)
 
-## Compile STM32CUBMX code
-1. User chatter as an example
+3) You need to set the USART2 Baudrate
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/03_uart_baud.PNG)
+
+4) You need to ensure the clock tress is same as the following
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/10-clock_tree.PNG)
+
+5) You need to follow the setting below to configure the project.
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/04_project_setting.PNG)
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/05_code_gen.PNG)
+
+## B. ROS Libraries implementation
+You need to extract the given **RosLibs.zip** and put all the extracted files as shown in below.
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/06-extract_zip.PNG)
+
+## C. uVision Config
+1) Open the uvision and add one group named as **ROS**. Also, you need to import those three files properly.
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/07-add_group.PNG)
+
+2) You need to add three lines of code in the **Application/User/Core/main.c**.
 ```
-cd agv_base_control/src/rosserial_stm32/src/ros_lib/examples
-sudo cp -avr chatter/ ~/development/STM32_cubmx_program/
-cd ~/development/STM32_cubmx_program/chatter
-rosrun rosserial_stm32 make_libraries.py .
-```
-**You may see a question about choosing a non-unique executable, please choose the one in src/rosserial. Usually, it is option 2.
-
-**Please check your make_libraries.py and make sure it is suitable for **python3**.
-
-**The pre-build STM32_cubmx_program is packed into this repository for reference.
-
-## Test rosserial with STM32
-**Make sure the STM32 usb port is connected to raspberry pi usb port.**
-
-1) ROSCORE
-```
-roscore
+# include "ros_main.h" # Line 27
+setup();               # Line 91
+loop();                # Line 98
 ```
 
-2) Set authority to serial port
-```
-sudo chmod 777 /dev/ttyACM0  ##Note that ttyACM0 may not fit yours
-```
+3) If you are using STM32F1, please ensure you have chosen the correct design in **RosLibs\STM32Hardware.h"
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/11-stm32hardware.PNG)
 
-3) Bring up ROS serial node
-```
-rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
-```
+4) You need to change the config of the compiler.
 
-4) Checkout ROS message
+For **Define** in preprocessor symbols,
 ```
-rostopic echo <your_topic>
+,__USE_C99_MATH 
 ```
+For **Misc Controls**,
+```
+--diag_suppress=1,47,1300
+```
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/08-compiler_config.PNG)
 
-5) Visualize nodes relationshiop
-```
-rosrun rqt_graph rqt_graph
-```
-
-## System startup procedure
-**Make sure the STM32 usb port is connected to raspberry pi usb port.**
-
-This part is very similar to "Test rosserial with STM32". However, some steps are removed because they are not necessary when the connection is confirmed.
-
-1. Activate roscore
-```
-roscore
-```
-
-2. Set authority to serial port
-```
-sudo chmod 777 /dev/ttyACM0
-```
-
-3. Bring up ROS serial node
-```
-rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
-```
-
-4. Start teleop_twist_keyboard control
-```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
-
-## ROS Node Graph
-![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/rosgraph.png)
+5) You need to include all the path shown in below.
+![image](https://github.com/vincent51689453/agv_base_control/blob/stm32-f1/git_image/09-add_path.PNG)
