@@ -18,7 +18,7 @@ This repository is tested and developed using Nucleo 64 STM32F103RBT6. If you ne
 
 5) You need to follow the setting below to configure the project.
 ![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/stm32-f1/git_image/04_project_setting.PNG)
-![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/stm32-f1/git_image/05_code_gen.PNG)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/stm32-f1/git_image/05_code_gen_setting.PNG)
 
 ## B. ROS Libraries implementation
 You need to extract the given **RosLibs.zip** and put all the extracted files as shown in below.
