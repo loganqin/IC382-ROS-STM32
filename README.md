@@ -108,8 +108,8 @@ roslaunch robot_encoder_odom agv_base_control_odom.launch
 ```
 
 ## RVIZ Visualization
-![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/odom_vis.png)
-![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/basic_odom_demo_x5.gif)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/noetic-pi/git_image/odom_vis.png)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/noetic-pi/git_image/basic_odom_demo_x5.gif)
 
 ## ROS Node Graph
-![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/rosgraph.png)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/noetic-pi/git_image/rosgraph.png)
