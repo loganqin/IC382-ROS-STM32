@@ -1,0 +1,18 @@
+<launch>
+
+    <!-- Bringup rosserial -->
+    <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true">
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud" value="115200"/>
+    </node>
+    
+    <!-- Bring up encoder odom converter -->
+    <node pkg="robot_encoder_odom" type="robot_encoder_odom_node" name="robot_encoder_odom" output="screen" > </node>
+
+    <!-- Bringup teleop -->
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen" ></node>
+
+    <!-- Start RVIZ -->
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find robot_encoder_odom)/rviz_config/odom_vis.rviz" />
+
+</launch>

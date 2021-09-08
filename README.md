@@ -91,5 +91,25 @@ rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 
+5. Start encoder-odometry conversion
+```
+rosrun robot_encoder_odom robot_encoder_odom_node
+```
+
+**If you want to startup all the nodes together**
+1. Start up the base control system **Without odom**. You may need to disable RVIZ if you plan to run in raspberry pi.
+```
+roslaunch robot_encoder_odom agv_base_control_odom.launch
+```
+
+2. Start up the base control system **With odom**. You may need to disable RVIZ if you plan to run in raspberry pi.
+```
+roslaunch robot_encoder_odom agv_base_control_odom.launch
+```
+
+## RVIZ Visualization
+![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/odom_vis.png)
+![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/basic_odom_demo_x5.gif)
+
 ## ROS Node Graph
-![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/noetic-pi/git_image/rosgraph.png)
+![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/rosgraph.png)
