@@ -1,4 +1,4 @@
-# agv_base_control
+# IC382-ROS-STM32
 This repository is used to develop a ROS base controller with STM32 for AGV. Noted that this repository is developed and tested by ROS-Noetic and Ubuntu Server 18.04 64 bit in raspberry pi 3B+.
 
 ## Installation
@@ -27,7 +27,7 @@ catkin_make
 ## Compile STM32CUBMX code
 1. User chatter as an example
 ```
-cd agv_base_control/src/rosserial_stm32/src/ros_lib/examples
+cd IC382-ROS-STM32/src/rosserial_stm32/src/ros_lib/examples
 sudo cp -avr chatter/ ~/development/STM32_cubmx_program/
 cd ~/development/STM32_cubmx_program/chatter
 rosrun rosserial_stm32 make_libraries.py .
@@ -108,8 +108,8 @@ roslaunch robot_encoder_odom agv_base_control_odom.launch
 ```
 
 ## RVIZ Visualization
-![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/odom_vis.png)
-![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/basic_odom_demo_x5.gif)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/odom_vis.png)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/basic_odom_demo_x5.gif)
 
 ## ROS Node Graph
-![image](https://github.com/vincent51689453/agv_base_control/blob/pi-noeitc/git_image/rosgraph.png)
+![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/pi-noeitc/git_image/rosgraph.png)
