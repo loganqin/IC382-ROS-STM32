@@ -17,6 +17,10 @@ std_msgs::String str_msg;
 ros::Publisher stm32_status_pub("/stm32/system_up", &str_msg);
 
 
+// ROS motor encoders Publisher
+geometry_msgs::Vector3 encoders_data;
+ros::Publisher encoder_pub("/stm32/encoders",&encoders_data);
+
 // Callback of cmd_vel
 void cmd_vel_msg(const geometry_msgs::Twist& msg)
 {
@@ -34,6 +38,7 @@ void setup(void)
   nh.initNode();
 	// Call ROS Master to keep a registry of this publisher
   nh.advertise(stm32_status_pub);
+	nh.advertise(encoder_pub);
 	// Subscribe cmd_vel
 	nh.subscribe(velocity_sub);
 }
@@ -43,6 +48,11 @@ void loop(void)
 {
   // Life LED	
 	HAL_GPIO_TogglePin(ONBOARD_LED_GPIO_Port,ONBOARD_LED_Pin);
+	// Publish encoder vectors
+	encoders_data.x = 0;
+	encoders_data.y = 0;
+	encoder_pub.publish(&encoders_data);
+	
 	nh.spinOnce();
 	HAL_Delay(500);
 }
