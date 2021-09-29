@@ -43,6 +43,7 @@ rosrun rosserial_stm32 make_libraries.py .
 
 1) ROSCORE
 ```
+cd development/agv_base_control
 roscore
 ```
 
@@ -70,9 +71,10 @@ rosrun rqt_graph rqt_graph
 **Make sure the STM32 usb port is connected to raspberry pi usb port.**
 
 This part is very similar to "Test rosserial with STM32". However, some steps are removed because they are not necessary when the connection is confirmed.
-
+### A. Startup each module individually
 1. Activate roscore
 ```
+cd 
 roscore
 ```
 
@@ -96,16 +98,24 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 rosrun robot_encoder_odom robot_encoder_odom_node
 ```
 
-**If you want to startup all the nodes together**
+### B. Startup ALL NODES together
 1. Start up the base control system **Without odom**. You may need to disable RVIZ if you plan to run in raspberry pi.
 ```
+cd development/agv_base_control
+source devel/setup.bash
+sudo chmod 777 /dev/ttyACM0
 roslaunch robot_encoder_odom agv_base_control_odom.launch
 ```
 
 2. Start up the base control system **With odom**. You may need to disable RVIZ if you plan to run in raspberry pi.
 ```
+cd development/agv_base_control
+source devel/setup.bash
+sudo chmod 777 /dev/ttyACM0
 roslaunch robot_encoder_odom agv_base_control_odom.launch
 ```
+
+**For the usage of teleop_twist_keyboard, please refer to http://wiki.ros.org/teleop_twist_keyboard.
 
 ## RVIZ Visualization
 ![image](https://github.com/vincent51689453/IC382-ROS-STM32/blob/noetic-pi/git_image/odom_vis.png)
